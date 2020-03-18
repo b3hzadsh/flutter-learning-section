@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:section_all/pages/first_section.dart';
 import 'package:section_all/pages/radio_btn.dart';
 import 'package:section_all/pages/second-section.dart';
+import 'package:section_all/pages/stream.dart';
 // import 'package:section_all/pages/wrap.dart';
 import 'src/routes.dart';
 
@@ -77,6 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text("Section 3 (radio bottun)"),
                         onPressed: () {
                           toOtherSection(context, RadioBtn());
+                        },
+                      ),
+                      RaisedButton(
+                        child: Text("Section 4 (Stream)"),
+                        onPressed: () {
+                          toOtherSection(context, StreamPage());
                         },
                       )
                     ],
