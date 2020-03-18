@@ -9,27 +9,26 @@ class FirstSection extends StatelessWidget {
           title: Text("Wrap!"),
         ),
         body: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Wrap(
-                  spacing: 0.0, // gap between adjacent chips
-                  runSpacing: 0.0, // gap between lines
-                  children: <Widget>[
-                    chipDesign("Food", Color(0xFF4fc3f7)),
-                    chipDesign("Lifestyle", Color(0xFFffb74d)),
-                    chipDesign("Health", Color(0xFFff8a65)),
-                    chipDesign("Sports", Color(0xFF9575cd)),
-                    chipDesign("Nature", Color(0xFF4db6ac)),
-                    chipDesign("Fashion", Color(0xFFf06292)),
-                    chipDesign("Heritage", Color(0xFFa1887f)),
-                    chipDesign("City Life", Color(0xFF90a4ae)),
-                    chipDesign("Entertainment", Color(0xFFba68c8)),
-                  ],
-                )
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Wrap(
+                direction: Axis.vertical,
+                spacing: 10.0, // gap between adjacent chips
+                runSpacing: 5.0, // gap between lines
+                children: <Widget>[
+                  chipDesign("Food", Color(0xFF4fc3f7)),
+                  chipDesign("Lifestyle", Color(0xFFffb74d)),
+                  chipDesign("Health", Color(0xFFff8a65)),
+                  chipDesign("Sports", Color(0xFF9575cd)),
+                  chipDesign("Nature", Color(0xFF4db6ac)),
+                  chipDesign("Fashion", Color(0xFFf06292)),
+                  chipDesign("Heritage", Color(0xFFa1887f)),
+                  chipDesign("City Life", Color(0xFF90a4ae)),
+                  chipDesign("Entertainment", Color(0xFFba68c8)),
+                ],
+              )
+            ],
           ),
         ),
       ),
@@ -38,6 +37,7 @@ class FirstSection extends StatelessWidget {
 }
 
 Widget chipDesign(String label, Color color) => Container(
+      // color: Colors.yellow,
       child: Chip(
         label: Text(
           label,
@@ -48,7 +48,7 @@ Widget chipDesign(String label, Color color) => Container(
         backgroundColor: color,
         elevation: 4,
         shadowColor: Colors.grey[50],
-        padding: EdgeInsets.all(4),
+        // padding: EdgeInsets.all(4),
       ),
       margin: EdgeInsets.only(left: 12, right: 12, top: 2, bottom: 2),
     );

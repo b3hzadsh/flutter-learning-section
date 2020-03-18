@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:section_all/pages/first_section.dart';
+import 'package:section_all/pages/radio_btn.dart';
 import 'package:section_all/pages/second-section.dart';
-import 'package:section_all/pages/wrap.dart';
+// import 'package:section_all/pages/wrap.dart';
+import 'src/routes.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,11 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void ToFirstSection() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FirstSection()));
-  }
-
   void ToDelayPage() {
     Navigator.push(
       context,
@@ -50,34 +47,51 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Wrap(
-                spacing: 0.0,
-                runSpacing: 0.0,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text("Section 1 (wrap)"),
-                    onPressed: ToFirstSection,
+      body: WillPopScope(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.all(10.0), // padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Wrap(
+                    spacing: 20.0,
+                    runSpacing: 0.0,
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text("Section 1 (wrap)"),
+                        onPressed: () {
+                          toOtherSection(context, FirstSection());
+                        },
+                      ),
+                      // divider(context),
+                      //  x(),
+                      RaisedButton(
+                        child: Text("Section 2 (Delay Page)"),
+                        onPressed: ToDelayPage,
+                      ),
+                      RaisedButton(
+                        child: Text("Section 3 (radio bottun)"),
+                        onPressed: () {
+                          toOtherSection(context, RadioBtn());
+                        },
+                      )
+                    ],
                   ),
-                  // divider(context),
-                  SizedBox(width: 20),
-                  RaisedButton(
-                    child: Text("Delay Page"),
-                    onPressed: ToDelayPage,
-                  )
-                ],
-              ),
-            )
-          ],
+                )
+              ],
+            ),
+          ),
         ),
+        onWillPop: () {},
       ),
     );
+  }
+
+  Widget x() {
+    return SizedBox(width: 20);
   }
 }
