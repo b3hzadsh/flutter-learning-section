@@ -15,16 +15,7 @@ class StreamPage extends StatelessWidget {
 }
 
 Widget streamBody(BuildContext context) {
-  Widget strWidget = StreamBuilder(
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return Text(snapshot.data);
-      } else {
-        return Text(snapshot.error);
-      }
-    },
-    stream: bloc.str,
-  );
+  Widget strWidget;
   bool firstTime = true;
   var baker = new StreamTransformer.fromHandlers(
     handleData: (input, sink) {
@@ -36,7 +27,20 @@ Widget streamBody(BuildContext context) {
     },
   );
 
-  bloc.str.map((s) => s + "Hi").transform(baker); // .listen()
+  bloc.str.map((s) => s + "Hi").transform(baker).listen((s) {
+    strWidget = StreamBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data);
+        } else {
+          return Text(snapshot.error);
+        }
+      },
+      stream: bloc.str,
+    );
+  }, onError: (s) {
+    strWidget = Text("s");
+  }); // .listen()
   final TextEditingController txtCtl = new TextEditingController();
 
   return Container(
@@ -57,7 +61,7 @@ Widget streamBody(BuildContext context) {
             Container(
               margin: EdgeInsets.all(15.0),
             ),
-            strWidget,
+            firstTime ? Text("not yet") : strWidget,
           ],
         ),
       ),
