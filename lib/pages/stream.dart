@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import '../bloc/bloc.dart';
 import 'dart:async';
 
@@ -8,6 +9,14 @@ class StreamPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Working with Stream"),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                Navigator.pop(context);
+                bloc.dispose();
+              })
+        ],
       ),
       body: streamBody(context),
     );
