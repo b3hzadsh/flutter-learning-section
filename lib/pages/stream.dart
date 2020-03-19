@@ -15,6 +15,16 @@ class StreamPage extends StatelessWidget {
 }
 
 Widget streamBody(BuildContext context) {
+  Widget strWidget = StreamBuilder(
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Text(snapshot.data);
+      } else {
+        return Text(snapshot.error);
+      }
+    },
+    stream: bloc.str,
+  );
   bool firstTime = true;
   var baker = new StreamTransformer.fromHandlers(
     handleData: (input, sink) {
@@ -47,16 +57,7 @@ Widget streamBody(BuildContext context) {
             Container(
               margin: EdgeInsets.all(15.0),
             ),
-            StreamBuilder(
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data);
-                } else {
-                  return Text(snapshot.error);
-                }
-              },
-              stream: bloc.str,
-            ),
+            strWidget,
           ],
         ),
       ),

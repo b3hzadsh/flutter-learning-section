@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:section_all/pages/bloc_pattern.dart';
 import 'package:section_all/pages/first_section.dart';
 import 'package:section_all/pages/radio_btn.dart';
 import 'package:section_all/pages/second-section.dart';
@@ -85,7 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {
                           toOtherSection(context, StreamPage());
                         },
-                      )
+                      ),
+                      RsBtn(context, "BloC Pattern", BloCPattern())
                     ],
                   ),
                 )
@@ -101,4 +103,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget x() {
     return SizedBox(width: 20);
   }
+}
+
+Widget RsBtn(context, String btnTxt, Widget nextPage) {
+  return RaisedButton(
+    child: Text("$btnTxt"),
+    onPressed: () {
+      toOtherSection(context, nextPage);
+    },
+  );
 }
