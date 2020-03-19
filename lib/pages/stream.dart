@@ -1,22 +1,25 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import '../bloc/bloc.dart';
 import 'dart:async';
+
+bool firstTime = true;
 
 class StreamPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              bloc.dispose();
+              firstTime = true;
+              Navigator.pop(context);
+            }),
         title: Text("Working with Stream"),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () {
-                Navigator.pop(context);
-                bloc.dispose();
-              })
-        ],
+        actions: <Widget>[],
       ),
       body: streamBody(context),
     );
@@ -24,11 +27,9 @@ class StreamPage extends StatelessWidget {
 }
 
 Widget streamBody(BuildContext context) {
-  Widget strWidget;
-  bool firstTime = true;
   var baker = new StreamTransformer.fromHandlers(
     handleData: (input, sink) {
-      if (input.length < 6) {
+      if (input.length < 4) {
         sink.add(input);
       } else {
         sink.addError("text is too short");
@@ -36,20 +37,7 @@ Widget streamBody(BuildContext context) {
     },
   );
 
-  bloc.str.map((s) => s + "Hi").transform(baker).listen((s) {
-    strWidget = StreamBuilder(
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data);
-        } else {
-          return Text(snapshot.error);
-        }
-      },
-      stream: bloc.str,
-    );
-  }, onError: (s) {
-    strWidget = Text("s");
-  }); // .listen()
+  // .listen()
   final TextEditingController txtCtl = new TextEditingController();
 
   return Container(
@@ -63,14 +51,39 @@ Widget streamBody(BuildContext context) {
             TextField(
               controller: txtCtl,
               onChanged: (String s) {
-                firstTime = false;
                 bloc.steChange(s);
+                //bloc.str.map((s) => s).transform(baker);
               },
             ),
             Container(
               margin: EdgeInsets.all(15.0),
             ),
-            firstTime ? Text("not yet") : strWidget,
+            StreamBuilder(
+              builder: (context, snapshot) {
+                String vs;
+                Color cl = Colors.white;
+                if (snapshot.hasData) {
+                  if (txtCtl.text.length < 5) {
+                    vs = "snapshot.error";
+                  }
+
+                  if (txtCtl.text.length > 5) {
+                    cl = Colors.blue;
+                    vs = txtCtl.text;
+                  } else {
+                    vs = "not enough letters";
+                  }
+                } else {
+                  cl = Colors.red;
+                  vs = "not yet";
+                }
+                return Text(
+                  vs,
+                  style: TextStyle(color: cl),
+                );
+              },
+              stream: bloc.str,
+            ),
           ],
         ),
       ),
