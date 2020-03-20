@@ -53,7 +53,7 @@ Widget txtRadio(String txt, int vl, Function xO) {
           onChanged: (vls) {
             x = vl;
             xO();
-            print(vls);
+            // print(vls);
           },
         )
       ],
