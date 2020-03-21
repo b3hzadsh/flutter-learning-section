@@ -146,7 +146,9 @@ Widget txtRadio(String txt, int vl, Function xO) {
     ),
   );
 }
-// using global var for groupValue ! /
+// using global var for groupValue ! /Radiobtn
 // dont use streamController instead stream
-//use behaviorSubject for using .value and be broadcast streamCintroller
+//use behaviorSubject for using .value and be broadcast streamController
 //remember this:  bloc.streamMoney.stream.value
+//u can use stream after add some thing to in with sink
+// with or without stream.map().lisetn -- just with stream Builder
