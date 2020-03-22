@@ -24,33 +24,64 @@ class AnimatonBody extends StatefulWidget {
 }
 
 class _AnimatonBodyState extends State<AnimatonBody>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   AnimationController picAnimCont;
   Animation<double> picAnimation;
   @override
   void initState() {
     super.initState();
     picAnimCont = new AnimationController(
-        vsync: this, duration: Duration(microseconds: 500));
-    picAnimation = Tween(begin: 0.0, end: 100.0)
-        .animate(CurvedAnimation(parent: picAnimCont, curve: Curves.easeIn));
+        vsync: this, duration: Duration(milliseconds: 950));
+    picAnimation = Tween(begin: 0.0099, end: 1.0).animate(
+      CurvedAnimation(parent: picAnimCont, curve: Curves.bounceIn),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white38,
+      //color: Colors.white38,
       child: Center(
-        child: Stack(
-          overflow: Overflow.visible,
-          children: <Widget>[
-            Container(
-              height: 263.0,
-              width: 253.0,
-              color: Colors.brown,
-            ),
-            // anmaition.value
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Stack(
+                overflow: Overflow
+                    .visible, // stuff out of stack ! clip or visible / when use positioned in stack
+                children: <Widget>[
+                  Container(
+                    height: 263.0,
+                    width: 253.0,
+                    color: Colors.blue,
+                  ),
+                  AnimatedBuilder(
+                    animation: picAnimation,
+                    builder: (context, _) {
+                      return Container(
+                        height: 263.0,
+                        width: 253.0,
+                        child: Opacity(
+                          opacity: picAnimation.value,
+                          child: Image.asset("assets/images/mypic.jpg"),
+                        ),
+                      );
+                    },
+                  )
+                  // anmaition.value
+                ],
+              ),
+              RaisedButton(
+                onPressed: () {
+                  if (AnimationStatus.dismissed == picAnimation.status) {
+                    picAnimCont.forward().orCancel;
+                  } else if (AnimationStatus.completed == picAnimation.status) {
+                    picAnimCont.reverse().orCancel;
+                  }
+                },
+                child: Text("run animation"),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -62,3 +93,4 @@ class _AnimatonBodyState extends State<AnimatonBody>
 //   return TweenAnimationBuilder(tween: x, duration: null, builder: null);
 // }
 // __controller.forward().orCancel; to be safe in some case add onCancel()
+// positioned ; transformwidget ;
