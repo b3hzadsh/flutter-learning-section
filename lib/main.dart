@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:section_all/pages/animation.dart';
 import 'package:section_all/pages/bloc_pattern.dart';
 import 'package:section_all/pages/first_section.dart';
 import 'package:section_all/pages/radio_btn.dart';
@@ -49,54 +50,34 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: WillPopScope(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(10.0), // padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Wrap(
-                    spacing: 20.0,
-                    runSpacing: 0.0,
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text("Section 1 (wrap)"),
-                        onPressed: () {
-                          toOtherSection(context, FirstSection());
-                        },
-                      ),
-                      // divider(context),
-                      //  x(),
-                      RaisedButton(
-                        child: Text("Section 2 (Delay Page)"),
-                        onPressed: ToDelayPage,
-                      ),
-                      RaisedButton(
-                        child: Text("Section 3 (radio bottun)"),
-                        onPressed: () {
-                          toOtherSection(context, RadioBtn());
-                        },
-                      ),
-                      RaisedButton(
-                        child: Text("Section 4 (Stream)"),
-                        onPressed: () {
-                          toOtherSection(context, StreamPage());
-                        },
-                      ),
-                      RsBtn(context, "BloC Pattern", BloCPattern())
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+      body: bodyH([
+        RaisedButton(
+          child: Text("Section 1 (wrap)"),
+          onPressed: () {
+            toOtherSection(context, FirstSection());
+          },
         ),
-        onWillPop: () {},
-      ),
+        // divider(context),
+        //  x(),
+        RaisedButton(
+          child: Text("Section 2 (Delay Page)"),
+          onPressed: ToDelayPage,
+        ),
+        RaisedButton(
+          child: Text("Section 3 (radio bottun)"),
+          onPressed: () {
+            toOtherSection(context, RadioBtn());
+          },
+        ),
+        RaisedButton(
+          child: Text("Section 4 (Stream)"),
+          onPressed: () {
+            toOtherSection(context, StreamPage());
+          },
+        ),
+        RsBtn(context, "BloC Pattern", BloCPattern()),
+        RsBtn(context, "Animation", AnimationPage()),
+      ]),
     );
   }
 
@@ -111,5 +92,30 @@ Widget RsBtn(context, String btnTxt, Widget nextPage) {
     onPressed: () {
       toOtherSection(context, nextPage);
     },
+  );
+}
+
+Widget bodyH(List<Widget> x) {
+  return WillPopScope(
+    child: SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.all(10.0), // padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Wrap(
+                spacing: 20.0,
+                runSpacing: 0.0,
+                children: x,
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+    onWillPop: () {},
   );
 }
